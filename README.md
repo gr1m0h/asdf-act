@@ -5,5 +5,5 @@
 
 ## Install
 ```
-asdf plugin add act https://github.com/grimoh/asdf-act.git
+asdf plugin add act
 ```
