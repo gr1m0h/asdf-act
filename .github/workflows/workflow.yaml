@@ -19,15 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-
-      - name: install asdf-vm
-        run: git clone https://github.com/asdf-vm/asdf.git $HOME/asdf
-
-      - name: install act and run test
-        run: . $HOME/asdf/asdf.sh
-          asdf plugin add act $GITHUB_WORKSPACE
-          asdf list all act
-          asdf install act latest
-          act --version
+      - name: asdf plugin test
+        uses: asdf-vm/actions//plugin-test@v1.1.0
+        with:
+          command: act --version
