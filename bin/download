@@ -5,13 +5,25 @@ set -e
 [ -n "$ASDF_INSTALL_VERSION" ] || (echo 'Missing ASDF_INSTALL_VERSION' >&2 && exit 1)
 [ -n "$ASDF_DOWNLOAD_PATH" ] || (echo 'Missing ASDF_DOWNLOAD_PATH' >&2 && exit 1)
 
-case "$(uname -s)" in
-	"Darwin")
-		DOWNLOAD_URL="https://github.com/nektos/act/releases/download/v${ASDF_INSTALL_VERSION}/act_Darwin_x86_64.tar.gz"
+case "$(uname -m)" in
+	"x86_64")
+		ARCH="x86_64"
 		;;
-	"Linux")
-		DOWNLOAD_URL="https://github.com/nektos/act/releases/download/v${ASDF_INSTALL_VERSION}/act_Linux_x86_64.tar.gz"
+	"arm64"|"aarch64")
+		ARCH="arm64"
 		;;
 esac
+
+case "$(uname -s)" in
+	"Darwin")
+		OS="Darwin"
+		;;
+	"Linux")
+		OS="Linux"
+		;;
+esac
+
+DOWNLOAD_URL="https://github.com/nektos/act/releases/download/v${ASDF_INSTALL_VERSION}/act_${OS}_${ARCH}.tar.gz"
+
 
 curl -fL -o "${ASDF_DOWNLOAD_PATH}/act.tar.gz" "${DOWNLOAD_URL}"
